@@ -217,8 +217,12 @@ not establish a live OAuth-generated code change. Other code changes and
 improvements to this code-generation process are not supported yet.
 
 After restart, the same identity and branch resumed with the development flag
-still enabled. Rest-linked dreams at events 114978, 115239, 115505 and 115768 cited
-additional berry and lantern outcomes and chose not to repeat known trials. The
+still enabled. Rest-linked dreams through event 116287 cited additional berry
+and lantern outcomes and chose not to repeat known trials. A dream that returns
+a validated practice trial can enter the ordinary reflective-trial queue and be
+executed by the continuing body's executive; dream proposals for other methods
+remain recorded hypotheses. The latest live dreams selected observation and no
+practice trial. The
 post-v10 live snapshot confirms the same individual running on the connected
 town pack with reflection idle and no eligible practice limitation, so no
 executable candidate was appropriate at that observation. A separate v9-to-v10 town migration at event 115391

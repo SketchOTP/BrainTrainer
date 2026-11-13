@@ -168,7 +168,13 @@ requires a further observed body effect; after at least one actual post-install
 trial, an unresolved goal with no further effect restores the previous policy.
 Missing or unavailable body trials alone do not count as failure. The later
 rest-linked dreams at events 114978, 115239, 115505 and 115768 cited additional berry
-and lantern outcomes and declined duplicate trials. A post-v10 live observation
+and lantern outcomes and declined duplicate trials. Dream proposals are not all
+discarded: when a dream selects `practice` and supplies a validated trial, the
+scheduler admits it through the same durable reflective-trial gate, and the
+continuing body's executive carries it out. Non-practice proposals remain
+recorded hypotheses until an implemented decision path adopts them. The latest
+live dreams, events 116030 and 116287, selected review/rest observations and no
+practice trial, so they did not create a body goal. A post-v10 live observation
 recorded the same identity and branch running on the new map, with reflection
 idle and no eligible practice limitation; no executable proposal was pending.
 The timestamped snapshot is
