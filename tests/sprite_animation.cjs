@@ -1,0 +1,31 @@
+const assert=require('node:assert/strict');
+const animation=require('../examples/persistent_individual/assets/creature/animation.js');
+assert.equal(animation.select({event:{body_motion:{before:3,after:2}}}),'left');
+assert.equal(animation.select({event:{body_motion:{before:2,after:3}}}),'right');
+assert.equal(animation.select({event:{outcome:{status:'rested'}}}),'rest');
+assert.equal(animation.select({event:{outcome:{completed:false,energy_delta:1}}}),'idle');
+assert.equal(animation.select({event:{outcome:{completed:true,energy_delta:1}}}),'eat');
+assert.equal(animation.select({event:{outcome:{status:'activated'}}}),'practice');
+assert.equal(animation.select({requests:[{}]}),'request');
+let now=0,callback,draws=0;
+global.performance={now:()=>now};global.requestAnimationFrame=fn=>callback=fn;
+global.matchMedia=()=>({matches:false});
+global.Image=class {constructor(){this.complete=true;this.naturalWidth=1254;this.naturalHeight=1254;}};
+const canvas={dataset:{},setAttribute(){},getContext:()=>({clearRect(){},drawImage(){draws++;}})};
+const sprite=animation.mount(canvas);
+const initial={tick:93,event_count:107,running:false,dream_count:0,revision_count:0};
+sprite.update(initial);callback(now);assert.equal(canvas.dataset.clip,'idle');
+const first=draws;now=1000;callback(now);assert.equal(draws,first,'paused save must not animate');
+sprite.update({...initial,running:true});now=1200;callback(now);assert(draws>first);
+sprite.update({...initial,running:false});const paused=draws;now=2000;callback(now);assert.equal(draws,paused);
+sprite.update({...initial,event_count:108,dream_count:1});now=2200;callback(now);assert.equal(canvas.dataset.clip,'rehearse');
+now=4000;callback(now);const finished=draws;now=5000;callback(now);assert.equal(draws,finished,'rehearsal display must stop');
+sprite.update({...initial,event_count:109,dream_count:1,revision_count:1});now=5200;callback(now);assert.equal(canvas.dataset.clip,'learned');
+for(const clip of Object.values(animation.clips)){assert(clip.sheet>=1&&clip.sheet<=4);assert(clip.row>=0&&clip.row<8);assert(clip.frames.every(n=>n>=0&&n<8));}
+console.log('PASS: observed action mappings, pause freeze, bounded rehearsal, revision cue and atlas bounds');
+
+sprite.update({...initial,event_count:110,running:true});now=5400;callback(now);
+sprite.disconnect();const disconnectedDraws=draws;now=6000;callback(now);assert.equal(draws,disconnectedDraws,'lost connection must freeze stale animation');
+sprite.update({...initial,event_count:115,running:false,dream_count:2,revision_count:2});now=6200;callback(now);assert.notEqual(canvas.dataset.clip,'learned','reconnect must not replay missed improvement as current');
+now=7000;callback(now);assert.equal(draws,disconnectedDraws+1,'reconnect draws current pose once without playing history');
+console.log('PASS: disconnect freezes and reconnect does not replay missed events');
