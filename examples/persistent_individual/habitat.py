@@ -101,8 +101,10 @@ class Habitat:
             'branch_parent':c._lineage['parent'],'tick':c.time,
             'running':self.running,'durable_tick':self.durable_tick,'error':self.error,
             'reflection_status':self.reflection.status if self.reflection else 'disabled',
+            'reflection_purpose':self.reflection.current_purpose if self.reflection else None,
             'asset_generation_status':self.asset_scheduler.status if self.asset_scheduler else 'disabled',
-            'reflections':[{'status':r['status'],'summary':r.get('reflection',{}).get('summary'),
+            'reflections':[{'status':r['status'],'purpose':r.get('purpose','analysis'),
+                'summary':r.get('reflection',{}).get('summary'),
                 'objective':r.get('reflection',{}).get('next_goal',{}).get('objective'),
                 'reason':r.get('reason'),'event':r['event']} for r in review.get('reflection_results',[])[-2:]],
             'world':({**host.world,'x':host.position,'map_url':map_url(host.world['pack_sha256'])} if host.world is not None else None),
@@ -110,14 +112,18 @@ class Habitat:
             'position':host.position,'energy':host.energy,'hunger':host.hunger,'reserve':host.reserve,
             'objects':list(host.objects.values()),'environment_objects':environment_contract(host),'event':host.last_event,
             'device_catalog':[{'id':key,'label':value['label']} for key,value in DEVICES.items()],
-            'development_updates':[{'request_id':r['request_id'],'retained':r['selected_sha256'] is not None,
+            'development_updates':[{'request_id':r['request_id'],'candidate_selected':r['selected_sha256'] is not None,
                 'candidate_count':len(r['candidates']),
                 'rejected_count':sum(not candidate['passed'] for candidate in r['candidates']),
                 'accepted_test_count':sum(len(candidate['cases']) for candidate in r['candidates'] if candidate['sha256']==r['selected_sha256']),
-                'scope':r['scope'],'evidence_kind':r['evidence_kind']}
+                'scope':r['scope'],'evidence_kind':r['evidence_kind'],'origin':r.get('origin'),
+                'lived_followup_status':next((f['status'] for f in reversed(review.get('implementation_reviews',[]))
+                    if f['request_id']==r['request_id']),None)}
                 for r in review.get('development_results',[])[-3:]],
             'goals':review.get('maintenance_goals',[])+review.get('learning_goals',[])+review.get('exploration_goals',[])+review['goals'],
-            'development_model':review['model'],'reflective_trials':review.get('reflective_trials',[]),'rest_enabled':host.rest_enabled,
+            'development_model':review['model'],'llm_development_enabled':c._llm_development_enabled,
+            'reflective_trials':review.get('reflective_trials',[]),'rest_enabled':host.rest_enabled,
+            'recent_dreams':review.get('recent_dreams',[]),
             'rest_evidence':review.get('rest_evidence',[]),
             'shared_activity_enabled':'shared_invitations' in review,
             'companion_available':review.get('companion_available',False),
@@ -157,6 +163,23 @@ class Habitat:
         elif operation=='availability':c.report_companion_availability(body['available'])
         elif operation=='invitation':c.respond_to_invitation(body['invitation_event'],body['response'])
         elif operation=='dream':c.dream()
+        elif operation=='llm-development':
+            if self.reflection is None:raise ValueError('OAuth reflection must be running before LLM-directed code development can be enabled')
+            c.enable_llm_directed_development(actor='companion-person')
+        elif operation=='self-review':
+            if self.reflection is None or not c._llm_self_review_enabled:
+                raise ValueError('OAuth lived self-review must be enabled before requesting a review')
+            update=next((e for e in reversed(c._events) if e['kind']=='implementation-change' and
+                e['payload'].get('operation')=='improve-lived-self-review'),None)
+            decision=next((e for e in reversed(c._events) if e['kind']=='hypothesis' and
+                e['payload'].get('operation')=='reflection-result' and
+                e['payload'].get('purpose')=='dream' and update and e['sequence']>update['sequence']),None)
+            if update is None or decision is None:
+                raise ValueError('no completed post-update decision is available to review')
+            self.reflection.request_self_review(c,self.save,actor='companion-person',focus={
+                'trigger_id':f"owner-post-update-review:{decision['sequence']}",
+                'reason':'owner-requested-post-update-self-review',
+                'evidence_event':decision['sequence'],'update_event':update['sequence']})
         elif operation!='save':raise ValueError('unknown operation')
         try:self.save()
         except Exception as exc:
@@ -208,6 +231,17 @@ def main():
             assets['/assets/creature/animation.js']=('animation.js','text/javascript; charset=utf-8')
             assets.update({f'/assets/world/{name}':(f'../world/{name}',kind) for name,kind in [('atlas.png','image/png'),('maps.json','application/json'),('littleroot-v2.json','application/json'),('rural-v3.json','application/json'),('rural-v4.json','application/json'),('rural-v4-atlas.png','image/png'),('rural-atlas.png','image/png'),('berry-oran.png','image/png'),('berry-pecha.png','image/png'),('renderer.js','text/javascript; charset=utf-8')]})
             assets.update({f'/assets/creature/etch-v3/{name}.png':(f'etch-v3/{name}.png','image/png') for name in ('movement','daily','expressions')})
+            assets.update({f'/assets/interactive-art/v1/{name}':(f'../../interactive_art/v1/runtime/{name}','image/png')
+                for name in ('terrain.png','trees.png','berry-growth.png','garden-soil.png','buildings.png','building-gallery.png','pond.png',
+                    'furniture.png','room-essentials.png','outdoor-props.png','directional-furniture.png',
+                    'directional-outdoor.png','actions.png','manipulation.png')})
+            assets['/assets/interactive-art/v1/props.json']=('../../interactive_art/v1/runtime/props.json','application/json')
+            assets['/worldpacks/rural-v5.json']=('../../worldpacks/rural-v5.json','application/json')
+            assets['/worldpacks/rural-v6.json']=('../../worldpacks/rural-v6.json','application/json')
+            assets['/worldpacks/rural-v7.json']=('../../worldpacks/rural-v7.json','application/json')
+            assets['/worldpacks/rural-v8.json']=('../../worldpacks/rural-v8.json','application/json')
+            assets['/worldpacks/rural-v9.json']=('../../worldpacks/rural-v9.json','application/json')
+            assets['/worldpacks/rural-v10.json']=('../../worldpacks/rural-v10.json','application/json')
             assets['/assets/creature/walk-v2.png']=('walk-v2.png','image/png')
             if self.path in assets:
                 name,kind=assets[self.path]

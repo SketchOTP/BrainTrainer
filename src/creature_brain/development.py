@@ -384,7 +384,17 @@ class DevelopmentalBrain:
     def review(self):
         result={'model':self.version,'goals':deepcopy(self.goals),'recent_reflections':deepcopy(self.reviews[-16:]),
                 'real_attempts':self.attempts,'real_completions':self.completions,
-                'dream_count':len(self.dreams),'limitations':['local action strategy only',
+                'dream_count':len(self.dreams),'recent_dreams':[
+                    {'kind':dream.get('kind','offline-learned-model-rehearsal'),
+                     'source_event':dream.get('source_event'),'source_tick':dream.get('source_tick'),
+                     'hypothesis_count':len(dream.get('hypotheses',[])),
+                     'candidate_goal_method':dream.get('candidate_goal',{}).get('method'),
+                     'candidate_goal_evidence':dream.get('candidate_goal',{}).get('evidence_ids',[]),
+                     'trial_target':(dream.get('candidate_trial') or {}).get('target'),
+                     'real_outcomes_added':dream.get('real_outcomes_added',0),
+                     'world_ticks_advanced':dream.get('world_ticks_advanced',0)}
+                    for dream in self.dreams[-3:]],
+                'limitations':['local action strategy only',
                 'dreams do not establish real competence','executable revision limited to an authored practice-policy language' if supports(self.version,'executable') else 'executable self-modification unavailable in this version']}
         if supports(self.version,'curriculum'):
             result.update(self.curriculum.review())

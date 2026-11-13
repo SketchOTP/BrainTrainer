@@ -1,7 +1,7 @@
-"""OAuth Codex thought-cycle prototype. Outputs are proposals, never lived facts.
+"""OAuth reflection worker. Outputs remain proposals until the habitat validates them.
 
-This worker is deliberately separate from the continuing individual's event loop.
-It has no checkpoint-writing or candidate-adoption operation.
+One bounded policy program may enter the separate candidate evaluator; this
+module cannot write checkpoints, edit files or install executable changes.
 """
 import hashlib
 import json
@@ -20,8 +20,13 @@ SCHEMA = {
   'next_goal':{'type':'object','additionalProperties':False,
    'properties':{'objective':{'type':'string'},'method':{'type':'string','enum':['practice','explore','ask','review','code','rest']},'evidence_ids':{'type':'array','items':{'type':'integer'}},'success_observation':{'type':'string'},'failure_observation':{'type':'string'},'stop_condition':{'type':'string'}},
    'required':['objective','method','evidence_ids','success_observation','failure_observation','stop_condition']},
+  'software_change':{'anyOf':[{'type':'null'},{'type':'object','additionalProperties':False,
+   'properties':{'target':{'type':'string','enum':['practice-policy']},'source':{'type':'string','maxLength':512},
+    'expected_effect':{'type':'string'},'evidence_ids':{'type':'array','items':{'type':'integer'}},
+    'regressions_to_watch':{'type':'array','items':{'type':'string'}}},
+   'required':['target','source','expected_effect','evidence_ids','regressions_to_watch']}]},
   'uncertainties':{'type':'array','items':{'type':'string'}}},
- 'required':['request_id','summary','hypotheses','next_goal','uncertainties']}
+ 'required':['request_id','summary','hypotheses','next_goal','software_change','uncertainties']}
 
 
 SCHEMA['properties']['trial']={'anyOf':[{'type':'null'},{'type':'object','additionalProperties':False,
@@ -41,6 +46,9 @@ def prepare(companion, directory, *, purpose, focus=None):
  selected_review['learning_goals']=[{**{k:g[k] for k in goal_fields if k in g},'evidence':g.get('evidence',[])[-3:]} for g in review.get('learning_goals',[])[-8:]]
  for key in ('implementation_reviews','investigation_reports'):selected_review[key]=review.get(key,[])[-3:]
  selected_review['reflective_trials']=review.get('reflective_trials',[])[-3:]
+ development_request=companion._mind.improvement_request() if purpose=='development' else None
+ if purpose=='development' and development_request is None:
+  raise ValueError('no current lived improvement request exists')
  if focus and focus.get('goal_id'):
   goal=next((g for g in review.get('learning_goals',[]) if g['id']==focus['goal_id']),None)
   if goal:selected_review['focus_goal']={**{k:goal[k] for k in goal_fields if k in goal},'evidence':goal.get('evidence',[])[-3:]}
@@ -53,6 +61,8 @@ def prepare(companion, directory, *, purpose, focus=None):
   elif type(value) is int and (key.endswith('_event') or key in ('evidence','timing_evidence')):
    if 0<=value<len(companion._events):references.add(value)
  collect(selected_review)
+ collect(development_request)
+ collect(focus)
  indices=set(range(max(0,len(companion._events)-8),len(companion._events)))
  indices.update(sorted(references)[-24:])
  # A bounded view, not a claim to remember the entire individual's history.
@@ -72,6 +82,7 @@ def prepare(companion, directory, *, purpose, focus=None):
   records.append(row)
  packet={'purpose':purpose,'identity':companion.identity,'branch':companion._lineage,
   'tick':companion.time,'focus':focus,'evidence':records,
+  'development_request':development_request,
   'execution_context':{
    'observation_tick':companion.time,
    'body_continues_during_reflection':True,
@@ -84,13 +95,18 @@ def prepare(companion, directory, *, purpose, focus=None):
   'current_observation':companion._host.last_event.get('observation_after') if companion._host.last_event else None,
   'review':selected_review,'citable_evidence_ids':[r['sequence'] for r in records],
   'role':'reflective component of a persistent creature; not a separate individual',
-  'authority':'hypotheses and goal proposals only; no world action, code installation or memory rewrite'}
+  'authority':('a bounded executable practice-policy candidate may be proposed for a separate regression evaluation; it is never installed directly' if purpose=='development' else
+   'hypotheses and goal proposals only; no world action, code installation or memory rewrite')}
  encoded=json.dumps(packet,sort_keys=True).encode();request_id=hashlib.sha256(encoded).hexdigest()
  packet['request_id']=request_id
  directory=Path(directory).resolve();directory.mkdir(parents=True,exist_ok=False)
  (directory/'request.json').write_text(json.dumps(packet,indent=2))
  (directory/'schema.json').write_text(json.dumps(SCHEMA))
  prompt=('Reflect on the supplied continuing creature state for the requested purpose. '
+  'For self-review, assess only cited lived body outcomes, identify what changed or remains uncertain, and select a next goal only when the evidence warrants it. '
+  'Compare a self-review goal with prior completed trials. If the same target, action and appearance prediction already produced repeated observed successes, do not propose that identical trial again; choose a new target or a distinct appearance prediction that tests a useful question, or recommend no further trial. '
+  'The requested purpose is '+purpose+'. A dream request is anchored to a cited completed rest action; '
+  'it is not evidence that the body slept, acted or experienced the ideas that follow. '
   'Return a concise structured decision summary, testable hypotheses and a proposed next goal. '
   'Learning must be tested by actual activity in the continuing habitat: name what to try, '
   'what observable success and failure would look like, and when to stop or reconsider. '
@@ -106,7 +122,9 @@ def prepare(companion, directory, *, purpose, focus=None):
   'Null expected_appearance means any completed interaction with an observed appearance change. '
   'Use null trial for non-practice proposals. Do not invent target identifiers or action numbers. '
   'Do not substitute hidden branch tests or mental simulation for trying a learned skill. '
-  'Software candidates can receive isolated crash checks, but usefulness requires lived outcomes. '
+  'Software candidates can receive isolated crash checks, but usefulness requires lived outcomes. '+
+  ("For development, the attached request was initiated by the individual's own observed practice limitation. Decide whether another real practice attempt or a code change is appropriate. You may propose executable code only for the bounded practice-policy target: one exact Python function named should_stop. The accepted grammar is one return expression comparing trials, changes, no_change_streak or observed_gap to integer thresholds from 1 to 32, including the authored progress_sensitive and observed_gap_sensitive conditional forms. The current source and executable counters are supplied. Do not propose general Python, imports, file edits, shell commands or changes to other modules. Cite the lived goal evidence in both next_goal and software_change. A code candidate must differ from the current policy and state an observable expected effect plus regressions to watch. If current behavior should not be changed, set method to review, trial and software_change to null. Candidate code will be parsed against the restricted language, tested on isolated body branches, then exercised by this continuing body before it can be considered retained. "
+   if purpose=='development' else '')+
   'Use only supplied evidence; cite only citable_evidence_ids. Summary references outside that list are not supplied evidence. A dream is a hypothetical rehearsal, '
   'not an experienced event. Do not infer causes, identity changes, successful abilities or '
   'software improvements without evidence. Do not call tools or inspect other files. '
@@ -136,6 +154,18 @@ def validate_response(response, packet):
  if not isinstance(g,dict) or set(g)!=set(('objective','method','evidence_ids','success_observation','failure_observation','stop_condition')):raise ValueError('invalid goal')
  text(g['objective']);text(g['success_observation']);text(g['failure_observation']);text(g['stop_condition']);refs(g['evidence_ids'])
  if g['method'] not in SCHEMA['properties']['next_goal']['properties']['method']['enum']:raise ValueError('unknown method')
+ change=response['software_change']
+ if change is not None:
+  if not isinstance(change,dict) or set(change)!=set(('target','source','expected_effect','evidence_ids','regressions_to_watch')):raise ValueError('invalid software change')
+  if packet.get('purpose')!='development' or change['target']!='practice-policy':raise ValueError('software change is outside the development purpose')
+  if g['method']!='code' or response['trial'] is not None:raise ValueError('code change must be the selected goal and cannot include a body trial')
+  text(change['source']);text(change['expected_effect']);refs(change['evidence_ids'])
+  if not isinstance(change['regressions_to_watch'],list):raise ValueError('invalid regression watch list')
+  for item in change['regressions_to_watch']:text(item)
+  from creature_brain.practice_policy import PracticePolicy
+  PracticePolicy(change['source'])
+ elif g['method']=='code':raise ValueError('code goal requires a bounded software change')
+ if packet.get('purpose')=='development' and not isinstance(packet.get('development_request'),dict):raise ValueError('development reflection has no lived improvement request')
  if not isinstance(response['uncertainties'],list):raise ValueError('invalid uncertainty list')
  for item in response['uncertainties']:text(item)
  return response

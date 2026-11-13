@@ -19,13 +19,46 @@ def town_pack_hash():return hashlib.sha256(PATH.with_name('littleroot-v2.json').
 def rural_pack_hash():return hashlib.sha256(PATH.with_name('rural-v3.json').read_bytes()).hexdigest()
 @lru_cache(maxsize=1)
 def visual_pack_hash():return hashlib.sha256(PATH.with_name('rural-v4.json').read_bytes()).hexdigest()
-def pack_files():return {pack_hash():'maps.json',town_pack_hash():'littleroot-v2.json',rural_pack_hash():'rural-v3.json',visual_pack_hash():'rural-v4.json'}
-def map_url(pack_id):return '/assets/world/'+pack_files()[pack_id]
+def interactive_pack_path():return PATH.parents[2]/'worldpacks'/'rural-v5.json'
+@lru_cache(maxsize=1)
+def interactive_pack_hash():return hashlib.sha256(interactive_pack_path().read_bytes()).hexdigest()
+def path_aligned_pack_path():return PATH.parents[2]/'worldpacks'/'rural-v6.json'
+@lru_cache(maxsize=1)
+def path_aligned_pack_hash():return hashlib.sha256(path_aligned_pack_path().read_bytes()).hexdigest()
+def town_canopy_pack_path():return PATH.parents[2]/'worldpacks'/'rural-v7.json'
+@lru_cache(maxsize=1)
+def town_canopy_pack_hash():return hashlib.sha256(town_canopy_pack_path().read_bytes()).hexdigest()
+def scoped_town_pack_path():return PATH.parents[2]/'worldpacks'/'rural-v8.json'
+@lru_cache(maxsize=1)
+def scoped_town_pack_hash():return hashlib.sha256(scoped_town_pack_path().read_bytes()).hexdigest()
+def natural_town_pack_path():return PATH.parents[2]/'worldpacks'/'rural-v9.json'
+@lru_cache(maxsize=1)
+def natural_town_pack_hash():return hashlib.sha256(natural_town_pack_path().read_bytes()).hexdigest()
+def connected_town_pack_path():return PATH.parents[2]/'worldpacks'/'rural-v10.json'
+@lru_cache(maxsize=1)
+def connected_town_pack_hash():return hashlib.sha256(connected_town_pack_path().read_bytes()).hexdigest()
+def pack_files():return {pack_hash():'maps.json',town_pack_hash():'littleroot-v2.json',rural_pack_hash():'rural-v3.json',visual_pack_hash():'rural-v4.json',interactive_pack_hash():'rural-v5.json',path_aligned_pack_hash():'rural-v6.json',town_canopy_pack_hash():'rural-v7.json',scoped_town_pack_hash():'rural-v8.json',natural_town_pack_hash():'rural-v9.json',connected_town_pack_hash():'rural-v10.json'}
+def pack_path(pack_id):
+    if pack_id==interactive_pack_hash():return interactive_pack_path()
+    if pack_id==path_aligned_pack_hash():return path_aligned_pack_path()
+    if pack_id==town_canopy_pack_hash():return town_canopy_pack_path()
+    if pack_id==scoped_town_pack_hash():return scoped_town_pack_path()
+    if pack_id==natural_town_pack_hash():return natural_town_pack_path()
+    if pack_id==connected_town_pack_hash():return connected_town_pack_path()
+    return PATH.with_name(pack_files()[pack_id])
+def map_url(pack_id):
+    if pack_id==interactive_pack_hash():return '/worldpacks/rural-v5.json'
+    if pack_id==path_aligned_pack_hash():return '/worldpacks/rural-v6.json'
+    if pack_id==town_canopy_pack_hash():return '/worldpacks/rural-v7.json'
+    if pack_id==scoped_town_pack_hash():return '/worldpacks/rural-v8.json'
+    if pack_id==natural_town_pack_hash():return '/worldpacks/rural-v9.json'
+    if pack_id==connected_town_pack_hash():return '/worldpacks/rural-v10.json'
+    return '/assets/world/'+pack_files()[pack_id]
 @lru_cache(maxsize=4)
 def pack(pack_id=None):
     if pack_id is None:pack_id=pack_hash()
     if pack_id not in pack_files():raise ValueError('unknown map pack')
-    return json.loads(PATH.with_name(pack_files()[pack_id]).read_text())
+    return json.loads(pack_path(pack_id).read_text())
 def walkable(region,x,y,pack_id=None):
     m=pack(pack_id)['maps'][region]
     return (0<=x<m['width'] and 0<=y<m['height'] and
@@ -235,8 +268,9 @@ def historical_packs(pack_id):
 
 def rural_home(host,target=None):
     target=target or rural_pack_hash()
-    expected=town_pack_hash() if target==rural_pack_hash() else rural_pack_hash()
-    if target not in (rural_pack_hash(),visual_pack_hash()):raise ValueError('invalid rural map target')
+    predecessors={rural_pack_hash():town_pack_hash(),visual_pack_hash():rural_pack_hash(),interactive_pack_hash():visual_pack_hash(),path_aligned_pack_hash():interactive_pack_hash(),town_canopy_pack_hash():path_aligned_pack_hash(),scoped_town_pack_hash():town_canopy_pack_hash(),natural_town_pack_hash():scoped_town_pack_hash(),connected_town_pack_hash():natural_town_pack_hash()}
+    if target not in predecessors:raise ValueError('invalid rural map target')
+    expected=predecessors[target]
     w=host.world
     if w is None or w.get('home_region')!='MAP_LITTLEROOT_TOWN' or w['pack_sha256']!=expected:raise ValueError('expected previous Littleroot map required')
     w.update(pack_sha256=target,goal=None,route=[],route_target=None)
@@ -249,4 +283,25 @@ def rural_home(host,target=None):
         if obj['region'] not in allowed:obj.update(region='MAP_LITTLEROOT_TOWN',x=10.,y=10.)
         if not walkable(obj['region'],int(obj['x']),int(obj['y']),w['pack_sha256']):
             obj['x'],obj['y']=map(float,nearest(obj['region'],obj['x'],obj['y'],w['pack_sha256']))
+    if target==natural_town_pack_hash() and (w.get('garden') or {}).get('model'):
+        from garden import migrate_to_growth_model
+        migrate_to_growth_model(host,target)
+    elif target==connected_town_pack_hash() and (w.get('garden') or {}).get('model'):
+        from garden import GROWTH_MODEL
+        if w['garden'].get('model')!=GROWTH_MODEL:raise ValueError('pond trail update requires berry garden v2')
+        w['garden']['pack_sha256']=target
     visit(host)
+
+def connect_pond_trail(host):
+    """Adopt the v10 visual path while preserving a valid in-progress route."""
+    from garden import GROWTH_MODEL,validate as validate_garden
+    w=host.world
+    if w is None or w.get('home_region')!='MAP_LITTLEROOT_TOWN' or w.get('pack_sha256')!=natural_town_pack_hash():
+        raise ValueError('the v9 Littleroot town is required')
+    garden=w.get('garden')
+    if garden is not None and garden.get('model')!=GROWTH_MODEL:
+        raise ValueError('pond path update requires berry garden v2')
+    w['pack_sha256']=connected_town_pack_hash()
+    if garden is not None:garden['pack_sha256']=connected_town_pack_hash()
+    validate(w,host.position,host.objects)
+    validate_garden(host)

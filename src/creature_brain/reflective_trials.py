@@ -83,6 +83,16 @@ class ReflectiveTrials:
             info['unavailable_reason']=reason
             return replace(proposed,action=8,decision=DECISION_FROM_ACTION[8],target=None),info
         return replace(proposed,action=action,decision=DECISION_FROM_ACTION[action],target=target.identity,attention=target.category),info
+    def redundant_success_count(self,plan):
+        """Count prior successes that repeat this exact target/action/prediction."""
+        validate_plan(plan)
+        return sum(1 for trial in self.trials
+            if trial['status']=='observed-success'
+            and trial['plan']['target']==plan['target']
+            and trial['plan']['type_id']==plan['type_id']
+            and trial['plan']['action']==plan['action']
+            and trial['plan'].get('starting_appearance')==plan.get('starting_appearance')
+            and trial['plan'].get('expected_appearance')==plan.get('expected_appearance'))
     def request(self,goals,tick):
         if self.active():return None
         completed={r['request_id'] for r in self.reflections}

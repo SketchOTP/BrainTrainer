@@ -238,7 +238,8 @@ class Individual(LifecycleFoodExperiment):
         if obj.initial_good not in (0,1) or type(obj.time) is not int or obj.time<0:
             raise ValueError('invalid world state')
         from garden import validate as validate_garden, plots
-        required=BASE_OBJECTS|(set(plots()) if (obj.world or {}).get('garden') is not None else set())
+        garden_pack=(obj.world or {}).get('pack_sha256')
+        required=BASE_OBJECTS|(set(plots(garden_pack)) if (obj.world or {}).get('garden') is not None else set())
         if not required<=set(obj.objects):raise ValueError('missing world objects')
         for key in set(obj.objects)-required:
             item=obj.objects[key]

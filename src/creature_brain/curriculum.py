@@ -89,6 +89,10 @@ class LearningCurriculum:
             policy=PracticePolicy(payload['source'])
             if policy.sha256!=payload.get('sha256'):
                 raise ValueError('practice implementation digest differs')
+            previous=self.policy
+            if ('previous_sha256' in payload and
+                    (payload.get('previous_sha256')!=previous.sha256 or payload.get('previous_source')!=previous.source)):
+                raise ValueError('practice candidate was based on a different active implementation')
             self.policy=policy
             goal=next((g for g in self.goals if g['id']==payload.get('resume_goal')),None)
             if goal is not None:
@@ -97,6 +101,8 @@ class LearningCurriculum:
                         if prior['status']=='awaiting-experience':prior['status']='superseded-before-outcome'
                     self.implementation_reviews.append({'implementation_event':record['sequence'],
                         'policy_sha256':policy.sha256,'goal_id':goal['id'],'request_id':payload['request_id'],
+                        'previous_policy_source':previous.source,'previous_policy_sha256':previous.sha256,
+                        'candidate_origin':payload.get('candidate_origin','authored-development'),
                         'starting_trials':goal['trials'],'starting_changes':goal['changes'],
                         'status':'awaiting-experience','evidence_kind':'post-installation-experience',
                         'scope':'resumed goal only; no general benefit established'})
@@ -105,6 +111,23 @@ class LearningCurriculum:
                     goal['superseded_practice_allowance']={'limit':goal.pop('practice_allowance'),
                         'implementation_event':record['sequence'],'request_id':payload['request_id']}
 
+            return
+        if record['kind']=='implementation-change' and payload.get('operation')=='restore-practice-policy':
+            restored=PracticePolicy(payload['source'])
+            pending=next((r for r in reversed(self.implementation_reviews)
+                if r['request_id']==payload.get('request_id') and
+                r['status']=='goal-unresolved-in-experience' and
+                r.get('candidate_origin')=='creature-llm-self-review' and
+                r.get('observed_trials',0)>0 and r.get('observed_changes')==0),None)
+            if (pending is None or self.policy.sha256!=payload.get('rejected_sha256') or
+                    restored.sha256!=pending.get('previous_policy_sha256') or
+                    restored.source!=pending.get('previous_policy_source') or
+                    payload.get('sha256')!=restored.sha256 or
+                    not isinstance(payload.get('actor'),str) or not payload['actor'].strip()):
+                raise ValueError('practice rollback does not match a failed lived candidate')
+            self.policy=restored
+            pending.update(status='rejected-after-lived-outcome',rollback_event=record['sequence'],
+                rejection_reason='the resumed body goal remained unresolved with no additional observed effect')
             return
         if record['kind']!='experience':return
         event=record['payload'];before=event['observation']['objects']
@@ -243,6 +266,9 @@ class LearningCurriculum:
                         followup.update(status='goal-completed-in-experience' if goal['status']=='demonstrated-visible-effect' else 'goal-unresolved-in-experience',
                             goal_status=goal['status'],outcome_event=record['sequence'],
                             cause='not-established')
+                        if (goal['status']=='demonstrated-visible-effect' and
+                                followup.get('observed_changes',0)>0):
+                            followup['status']='retained-after-lived-outcome'
             if self.retain_continuations:
                 if goal['status']=='active' and 'practice_allowance' not in goal:
                     goal.setdefault('policy_continuations',[]).append({'event':record['sequence'],
@@ -525,6 +551,14 @@ class LearningCurriculum:
                 **({'recorded_counters':self.policy_inputs(goal)} if self.stop_counterfactual else {}),
                 'candidates':candidates}
         return None
+
+    def failed_lived_candidate(self):
+        """Return one LLM code change that failed its resumed real-body goal."""
+        return next((row for row in reversed(self.implementation_reviews)
+            if row.get('candidate_origin')=='creature-llm-self-review' and
+            row['status']=='goal-unresolved-in-experience' and
+            row.get('observed_trials',0)>0 and row.get('observed_changes')==0 and
+            'rollback_event' not in row),None)
 
     def review(self):
         return {'learning_goals':deepcopy(self.goals),'practice_policy':self.policy.describe(),

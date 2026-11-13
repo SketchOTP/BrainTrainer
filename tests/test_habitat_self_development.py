@@ -23,7 +23,8 @@ class HabitatSelfDevelopmentTests(unittest.TestCase):
                 self.assertEqual(report['origin'],'own-practice-review')
                 self.assertTrue(report['request']['stop_decision']['inputs']['changes'])
                 update=state['development_updates'][0]
-                self.assertTrue(update['retained']);self.assertEqual(update['rejected_count'],1)
+                self.assertTrue(update['candidate_selected']);self.assertEqual(update['rejected_count'],1)
+                self.assertEqual(update['lived_followup_status'],'retained-after-lived-outcome')
                 self.assertGreaterEqual(update['accepted_test_count'],6)
                 self.assertEqual(update['evidence_kind'],'branched-tests')
                 restored=h.store.load();self.assertEqual(restored.snapshot(),h.creature.snapshot())

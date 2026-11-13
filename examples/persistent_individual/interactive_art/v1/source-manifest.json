@@ -1,0 +1,69 @@
+{
+  "model": "creature-habitat-art-v1",
+  "sources": {
+    "furniture-source.png": {
+      "origin": "OpenAI ImageGen",
+      "sha256": "19a54f24414d44c87acea76d30245a202d819c1eb92f030ce03dc0c1cc506863"
+    },
+    "outdoor-props-source.png": {
+      "origin": "OpenAI ImageGen",
+      "sha256": "f81063f45726e320e1a0a0bf9fa4fb4c7c86f14bd15bd814d8eee65cf10f65e7"
+    },
+    "pond-source.png": {
+      "origin": "OpenAI ImageGen",
+      "sha256": "43ec37588301f28fba911c9ef420ffc2b40bb60336fc1c9c3017f5c38a96e0a4"
+    },
+    "actions-source.png": {
+      "origin": "OpenAI ImageGen",
+      "sha256": "df337006901506a6207627f1198282c2f4ddf92b754be0de1a975f973b1ccf2a"
+    },
+    "terrain-source.png": {
+      "origin": "OpenAI ImageGen",
+      "sha256": "754af1b60f571937a75e7ad5da4d46c1a5b6302faaf22a405fd4e40596e7c242"
+    },
+    "buildings-source.png": {
+      "origin": "OpenAI ImageGen",
+      "sha256": "08e93872fe4c23a74ef2cc968d8f1c948cf0624befcf6387d58b59edef0bd7dc"
+    },
+    "trees-source.png": {
+      "origin": "OpenAI ImageGen",
+      "sha256": "be1690e593aae843c5734bd82463e912bfd8d62f469b34f2eb12500c38d57326"
+    },
+    "manipulation-source.png": {
+      "origin": "OpenAI ImageGen",
+      "sha256": "1c82a2ce853df925b4253c8d4c5eee4d2df585553a1251216635f065b9edf29f"
+    },
+    "room-essentials-source.png": {
+      "origin": "OpenAI ImageGen",
+      "sha256": "bad9873694c766ee8494e59cff76c0ae8646f342f76589f3bf809fae5f6e1f43"
+    },
+    "building-facings-source.png": {
+      "origin": "OpenAI ImageGen",
+      "sha256": "751b3f5e09d4b17a34417c1155eb1ad20ba9d72de5912d21c463c297a721f73b"
+    },
+    "manipulation-character-source.png": {
+      "origin": "OpenAI ImageGen",
+      "sha256": "9c5926c7fbc55de6e2e877636f10d433ef27f0c69f4be6786f23f618a1adc315"
+    },
+    "directional-furniture-source.png": {
+      "origin": "OpenAI ImageGen",
+      "sha256": "ad98e1d82277c736060dce0004dc45eb45a28d210817fcd83f956537a1b55566",
+      "layout": "4 views per prop in front, right, back, left order; 8 prop rows"
+    },
+    "directional-outdoor-source.png": {
+      "origin": "OpenAI ImageGen",
+      "sha256": "09587d3d873c69e25c0319030e08e8c0d66d1f0fb26a7feadbb6521ce67ed516",
+      "layout": "4 views per prop in front, right, back, left order; 8 prop rows"
+    },
+    "berry-growth-source.png": {
+      "origin": "OpenAI ImageGen",
+      "sha256": "cecf106ff3f1ba2caf7d39876988b2f75bc77fd443ed4c9cb17dc656f3349b62",
+      "layout": "4 columns by 3 rows: seed mound, sprout, sapling, small tree, medium tree, large bare tree, orange berry states, pink berry states"
+    },
+    "garden-soil-source.png": {
+      "origin": "OpenAI ImageGen",
+      "sha256": "0988ec053ff510a21a8d797246e986878e58d34f06ca0312ce3e7a3818cb1083",
+      "layout": "2 columns by 2 rows of irregular rounded garden-soil cutouts"
+    }
+  }
+}

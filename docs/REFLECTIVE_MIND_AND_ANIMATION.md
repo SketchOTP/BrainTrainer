@@ -13,13 +13,25 @@ project or printed. The worker receives an attributed bounded memory packet,
 returns structured hypotheses and a goal proposal, and retains request/output
 hashes, usage and failures. Shell and multi-agent tools are disabled; the CLI
 uses read-only mode and no user-config MCP servers. It does not modify the
-continuing individual or execute returned code.
+continuing individual or execute returned code. For a development-purpose
+reflection, the habitat may pass one returned practice-policy source to the
+separate bounded evaluator; the model cannot write files or install code.
 
-Purposes include self-review, analysis, dream and development. These labels do
-not yet establish four integrated capabilities. The first successful actual
-OAuth run used an explicit qualification branch. Live-history reflection is a
-separate read-only observation, not an adopted thought cycle. Reference validity
-is checked; a valid citation does not automatically prove semantic truth.
+Purposes include self-review, analysis, dream and development. A development
+request now carries the individual's current lived practice limitation and can
+choose code, another embodied trial, or no change. A code proposal is restricted
+to the existing small `PracticePolicy` language. The evaluator runs branch
+regressions before installation; the same continuing body then exercises the
+candidate. A later real effect marks it retained, while a no-effect unresolved
+goal restores the previous policy and keeps the failed attempt in history. This
+does not yet permit general repository edits or arbitrary code generation.
+These labels do not establish four complete integrated capabilities. The
+continuing individual has completed four live self-review → body-trial cycles,
+then an owner-requested post-update self-review at event 114492 that declined
+another redundant trial. Its prior identical body trials and subsequent berry
+outcomes were supplied as evidence; the review added no body outcome. Reference
+validity is checked; a valid citation does not automatically prove semantic
+truth, and one review does not establish improved general learning.
 
 A real live-history response cited an older event referenced by a goal summary
 but absent from its evidence packet. It was rejected and retained. An initial repair included up to 96 referenced events plus the latest 32.
@@ -38,9 +50,11 @@ explicit citable IDs and coverage. This repairs the producing context, not the v
    failure observation and a bounded stopping condition. Execute through the
    actual body, then review actual outcomes and retain learning.
 4. Dreams may propose or rehearse possibilities, but add no lived success counts.
-5. Commission code when the creature's diagnosis justifies it. Record exact source,
-   test executable candidates separately for regressions/crashes, then assess
-   utility through ordinary life. A coder's assertion of success is not acceptance.
+5. Expand beyond the current practice-policy program: let the creature diagnose
+   implementation limits across its body and memory, propose an appropriate code
+   change, and qualify it against acquired abilities and unfamiliar situations.
+   Then test the exact candidate in ordinary life and retain, revise, reject or
+   roll it back from observed consequences.
 6. Persist unresolved thoughts, selected goals, evidence and results across restart.
 
 ## Built-in animation generation
@@ -100,3 +114,68 @@ now schedules OAuth reflection and admits bounded body trials; see
 candidate PNGs through a reusable worker, but they are not visually qualified or
 installed; see `RUNTIME_IMAGE_PROVIDER_RESULTS.md`. General self-modification,
 full dreaming and autonomous asset authoring remain incomplete.
+
+## Rest-linked reflective dreaming
+
+The continuing individual's host can request an LLM dream from a cited completed
+rest action, after at least 256 world ticks since its prior reflection request.
+This is a bounded asynchronous thought cycle: the body continues during provider
+latency, returned ideas are stored as hypotheses, and the dream event adds no
+experience or world action. If the proposed method is practice and includes a
+valid plan, the existing scheduler may admit a bounded trial that the actual body
+must execute. Rest is not evidence of sleep or subjective dreaming. Non-practice
+goal proposals remain hypotheses until their body-side goal methods are built.
+
+The feature is recorded as a developer-authored implementation change for the
+same live individual. On 2026-11-13, its OAuth reflection produced a dream event
+citing completed rest event 110437, then proposed a one-attempt action-1 trial
+on berry-3. The continuing body reached contact and harvested it: event 110474
+records the appearance changing from `berry:pecha:state=1` to
+`berry:pecha:state=0`. The body later completed a berry-2 trial; a subsequent
+berry-4 trial was incomplete. The dream itself added zero outcomes and advanced
+zero world ticks. The dream and berry-3 result remained after checkpoint restore
+with the same identity and branch. This is one narrow live result, not evidence
+of repeatable generalization, subjective dreaming, creature-initiated software
+changes, or improved self-modification.
+
+After that restore, a later LLM review used the continuing event history to set
+a bounded workshop-lantern practice goal. The body tried action 1 five times;
+the fifth completed interaction changed the observed lantern state from 1 to 0,
+and the trial recorded `observed-success` (event 110894). The preceding four
+completed activations left the appearance unchanged. This shows the actual
+review-to-goal-to-body loop and a state-dependent outcome in this environment;
+it does not establish that the lantern rule generalizes to other objects. See
+`validation/rest-linked-dream-adoption-2026-11-13/followup-practice-after-restore.json`.
+
+The implementation receipt and hash-verified runtime event observation are under
+`validation/rest-linked-dream-adoption-2026-11-13/`.
+
+## Post-update review and executable-development decision
+
+After the v2 novelty update, the owner requested a fresh self-review. The same
+individual recorded it at event 114492 with purpose `self-review`. It compared
+the repeated lantern outcomes with the later berry-1 and berry-3 appearance
+changes and declined another identical trial. This is an observed review
+decision grounded in cited experience; it does not show that v2 caused those
+berry outcomes or establish generalized improvement.
+
+At implementation event 114510, the continuing individual was enabled to ask
+for bounded LLM-directed executable development when its own practice review
+produces an unresolved, evidence-backed stopping limitation. The proposed
+`PracticePolicy` is parsed in a finite language, exercised against isolated
+regression branches, then resumed in the real body's unfinished goal. Retention
+requires a further observed body effect; after at least one actual post-install
+trial, an unresolved goal with no further effect restores the previous policy.
+Missing or unavailable body trials alone do not count as failure. The later
+rest-linked dreams at events 114978, 115239, 115505 and 115768 cited additional berry
+and lantern outcomes and declined duplicate trials. A post-v10 live observation
+recorded the same identity and branch running on the new map, with reflection
+idle and no eligible practice limitation; no executable proposal was pending.
+The timestamped snapshot is
+`validation/lived-self-review-novelty-2026-11-13/post-v10-live-observation-115790.json`.
+The
+deterministic-provider regression covers proposal, branch evaluation, body
+follow-up, retention and rollback; a live OAuth code change remains unobserved.
+The live observation and owner review receipts are in
+`validation/lived-self-review-novelty-2026-11-13/`; current world continuity is
+in `validation/pond-trail-v10-2026-11-13/`.

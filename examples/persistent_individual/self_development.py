@@ -13,10 +13,13 @@ PROGRESS_PROFILES=(('progress-then-inert','delayed-switch',2),
                    ('progress-then-slower','delayed-switch',3))
 
 
-def install(companion, policy, *, request_id, resume_goal=None):
+def install(companion, policy, *, request_id, resume_goal=None, origin='authored-development'):
+    previous=companion._mind.curriculum.policy
     companion._append('implementation-change', {
         'operation':'install-practice-policy','actor':'creature-development',
         'request_id':request_id,'source':policy.source,'sha256':policy.sha256,
+        'previous_source':previous.source,'previous_sha256':previous.sha256,
+        'candidate_origin':origin,
         'resume_goal':resume_goal})
 
 
@@ -107,8 +110,9 @@ def evaluate(companion, request, *, use_evaluation_memory=True, use_retained_dec
         candidates.append(entry)
     selected=next((c for c in candidates if c['passed']),None)
     report={'request_id':request['request_id'],'request':request,
-        'origin':'own-practice-review','evidence_kind':'branched-tests',
+        'origin':request.get('candidate_origin','own-practice-review'),'evidence_kind':'branched-tests',
         'candidates':candidates,'selected_sha256':selected['sha256'] if selected else None,
-        'scope':'finite executable practice policy; authored diagnosis and test suite'}
+        'scope':('bounded executable practice policy; LLM-proposed candidate, isolated body branch regressions, then live post-installation body outcome required' if request.get('candidate_origin')=='creature-llm-self-review' else
+            'finite executable practice policy; authored diagnosis and test suite')}
     if plan['early_rejection']:report['evaluation_plan']=plan
     return report

@@ -1,0 +1,79 @@
+{
+  "model": "creature-habitat-runtime-art-v1",
+  "assets": {
+    "furniture.png": {
+      "width": 512,
+      "height": 512,
+      "sha256": "40321515b6bcf83fdfd7b42e52503de74f80bbd12474c33eef13f06ecd65158f"
+    },
+    "room-essentials.png": {
+      "width": 512,
+      "height": 512,
+      "sha256": "e4158472bf27a09a55bd9b8bf636d3ec76e1aa38ffc8507e72093dcb2658e3fa"
+    },
+    "directional-furniture.png": {
+      "width": 512,
+      "height": 1024,
+      "sha256": "8e7757ed190f979f4e8696d563997e54027c71383905a435dfb9d637f53600ea"
+    },
+    "directional-outdoor.png": {
+      "width": 512,
+      "height": 1024,
+      "sha256": "514d246a56b5a8f52402c60545e699eb1f2da7cd16014ffde5402b066bc015e0"
+    },
+    "outdoor-props.png": {
+      "width": 512,
+      "height": 512,
+      "sha256": "a21a60d7f7c66ba8315dac33226c6d76bf3d27ff349283bafb5159c3b1e89f0c"
+    },
+    "trees.png": {
+      "width": 512,
+      "height": 512,
+      "sha256": "02979f374adbd4eb07d19987983420fdf9cdeb532f8e5cf90e68009b73f6f46c"
+    },
+    "buildings.png": {
+      "width": 512,
+      "height": 512,
+      "sha256": "73ccf3f63c6317bc3f7d7e64c55318928f839f5b7638112cb670d7aec335058e"
+    },
+    "building-gallery.png": {
+      "width": 512,
+      "height": 512,
+      "sha256": "1e9f54d41bbd5062178eaed2eabb11361d692fc43dfdc49e5142d7b4171452fa"
+    },
+    "actions.png": {
+      "width": 512,
+      "height": 512,
+      "sha256": "95d67e48e1354123ac744e9b73e8e2e61948aceaea4d6ecc84d96c2ac51bc487"
+    },
+    "manipulation.png": {
+      "width": 512,
+      "height": 512,
+      "sha256": "7af3ee7786340486d11a778e83461b54fd6d47f60e4d0a17c7e7cecdbec44448"
+    },
+    "berry-growth.png": {
+      "width": 512,
+      "height": 384,
+      "sha256": "b15c6e48dc91e7d0f35074e1433dd820c890e27caacb400d758905c20620930b"
+    },
+    "garden-soil.png": {
+      "width": 256,
+      "height": 256,
+      "sha256": "a21592e54026456f27b660643db78b547bc6be95b6326ca354af364cbeb063e8"
+    },
+    "terrain.png": {
+      "width": 256,
+      "height": 512,
+      "sha256": "f137748534d375e3ff7f4102bb83c884ed5e5271b6603e97c07202c42ffc58df"
+    },
+    "pond.png": {
+      "width": 512,
+      "height": 305,
+      "sha256": "b887027a009435e7e9f1cde4c5cd9ccb4d6bd601bef667dbb53be5c1f57ec2ff"
+    }
+  },
+  "catalog": {
+    "path": "props.json",
+    "sha256": "41f7f554c5c55fc1937366732938abfbfcf189087b50f2267d8e01d4729bd110"
+  }
+}

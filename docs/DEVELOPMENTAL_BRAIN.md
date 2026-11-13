@@ -88,10 +88,11 @@ Use `--development` on the continuing-companion CLI to adopt this executive,
 existing positive-outcome memory path. These are currently research controls.
 The CLI emits the actual self-review, not an invented first-person narrative.
 
-The full goal remains incomplete: general self-set goals, autonomous review and
-practice cycles, useful dreaming, digital self-understanding, self-directed
-executable changes, improved improvement procedures, and sustained companionship
-all require further implementation and evidence.
+The full goal remains incomplete: general self-set goals across methods,
+generalizable learning and dreaming, digital self-understanding, self-directed
+executable changes, improved improvement procedures, and sustained
+companionship still require further implementation and evidence. A narrow
+embodied review/practice cycle is now live; its evidence and limits are below.
 
 
 ## V4 executable practice development
@@ -147,3 +148,82 @@ verification and familiar returns alike. See FAMILIAR_ACTIVITY_RESULTS.md.
 `development.supports` owns the capability/version registry, used by both executive
 selection and host restoration checks. New latest versions do not implicitly
 remove capabilities from older supported implementations.
+
+## Rest-linked reflective dreams
+
+The OAuth reflection scheduler can request a bounded LLM dream after an observed
+completed rest, with a 256-tick request cooldown. The request cites the rest event
+and recent/referenced history. A response is retained as a `dream` event with
+zero added outcomes and zero dream-driven world ticks. Practice proposals may
+become a bounded reflective trial; the continuing body must still execute the
+action and produce the predicted observation before any local result is counted.
+The rest action is not evidence of biological sleep or subjective dreaming.
+Other proposed goal methods remain proposals pending implementation.
+
+This is a developer-authored reflective facility, not evidence that the creature
+selected or modified the facility itself. The adoption receipt and first live
+OAuth dream, embodied berry-3 trial, later practice outcomes, restart continuity,
+and limitations are recorded under
+`validation/rest-linked-dream-adoption-2026-11-13/`.
+
+## Lived self-review and goal continuation
+
+The live individual adopted `llm-lived-self-review-v1` at implementation event
+112097. Completed reflective trials invoke the LLM with purpose `self-review`,
+including cited action outcomes and earlier trial records. Four reviews were
+recorded at events 112158, 112290, 112422 and 112551. Each summarized five actual
+action-1 interactions with the workshop lantern, including a visible appearance
+change on the fifth interaction, then admitted a bounded follow-up goal. The
+continuing body carried out all four goals and again recorded a state change on
+the fifth interaction. This demonstrates a repeated review → selected practice
+goal → lived outcome loop for one target/action, while also exposing an
+unproductive repetition: each review chose essentially the same test.
+
+At event 112676, the same individual adopted `llm-lived-self-review-v2`. Its
+prompt asks for a new target or distinct appearance prediction after repeated
+success, and the scheduler withholds an identical proposal once the same target,
+action and appearance condition have at least two observed successes. This was a
+developer-authored process update. The first pending Codex reflection was
+interrupted by restart and recorded provider status `-15`. A later rest-linked
+LLM reflection at event 113150 cited the four prior five-interaction lantern
+outcomes and recommended no identical trial. This is a post-update decision
+consistent with the novelty rule, but it is a dream-purpose reflection, not a
+new self-review cycle or a body trial. The owner-requested post-update
+self-review completed at event 114492; it again found no reason to repeat the
+lantern trial, cited repeated berry transitions from lived body outcomes, and
+proposed no code change. This establishes a fresh post-update review decision,
+not that v2 caused the berry outcomes. The same continuing identity and branch
+were preserved through service restart. Transfer, the lantern's cause, and
+goal-setting across methods remain unproven.
+Continuity receipts are under `validation/lived-self-review-adoption-2026-11-13/`
+and `validation/lived-self-review-novelty-2026-11-13/`.
+
+## LLM-directed executable practice candidates
+
+The continuing individual can be enabled to request an OAuth development review
+after its own practice executive detects partial visible progress followed by a
+stopping-rule limitation. The model may decline code, propose another embodied
+trial, or return one executable `PracticePolicy` program. The source is parsed
+against the existing finite language; it cannot import modules or access the
+host. The candidate runs in separate body branches against required regressions
+before the continuing copy installs it. Its original goal then resumes in the
+real body. A further observed effect records retention; an unresolved outcome
+with no additional effect restores the previous source while preserving all
+events. On event 114510 this capability was enabled for the live individual.
+The post-update review found no unresolved practice limitation, so no live code
+candidate has been proposed or retained yet. The bounded candidate path is
+covered by `test_reflection_scheduler` with a deterministic provider; that does
+not establish a live OAuth-generated code change. Other code changes and
+improvements to this code-generation process are not supported yet.
+
+After restart, the same identity and branch resumed with the development flag
+still enabled. Rest-linked dreams at events 114978, 115239, 115505 and 115768 cited
+additional berry and lantern outcomes and chose not to repeat known trials. The
+post-v10 live snapshot confirms the same individual running on the connected
+town pack with reflection idle and no eligible practice limitation, so no
+executable candidate was appropriate at that observation. A separate v9-to-v10 town migration at event 115391
+preserved the current body route while correcting the pond-side path. The exact
+live reflection observation is
+`validation/lived-self-review-novelty-2026-11-13/post-v10-live-observation-115790.json`;
+town continuity and visual evidence are under
+`validation/pond-trail-v10-2026-11-13/`.
