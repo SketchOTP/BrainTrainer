@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "creature-brain-reference"
+version = "0.3.0"
+description = "Genome-driven brain and biochemistry research simulator with an embodied world"
+requires-python = ">=3.12"
+license = {text = "MIT"}
+dependencies = []
+
+[project.scripts]
+creature-brain = "creature_brain.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+creature_brain = ["pet_web/*"]

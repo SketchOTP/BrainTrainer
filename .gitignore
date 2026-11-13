@@ -218,3 +218,23 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Local Creature Brain data and generated runtime state
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+SOURCE_MANIFEST.json
+research/
+runs/
+validation/
+tools/
+
+# External Pory/ROM-derived map and graphics files are not redistributed
+examples/persistent_individual/assets/world/*
+!examples/persistent_individual/assets/world/README.md
+!examples/persistent_individual/assets/world/renderer.js
+
+# Local/fixture-dependent test and duplicate asset bundle
+tests/test_rural_visual_fix.py
+examples/persistent_individual/assets/creature/etch-v3-sprite-pack.zip

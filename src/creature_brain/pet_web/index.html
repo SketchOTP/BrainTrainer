@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Moss · creature brain</title>
+<link rel="stylesheet" href="/style.css">
+<script defer src="/app.js"></script>
+</head>
+<body>
+<main>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Moss home">MOSS</a>
+    <div class="connection"><span id="status-dot"></span><span id="connection">Connecting</span></div>
+  </header>
+
+  <section class="intro">
+    <div>
+      <p class="eyebrow">DIGITAL LIFE · LOCAL SIMULATION</p>
+      <h1 id="name">Moss</h1>
+      <p class="lede">Moss lives inside a simulated world. Its brain receives body signals and can learn which world objects help.</p>
+    </div>
+    <button id="pause" class="quiet">Pause</button>
+  </section>
+
+  <section class="dashboard" aria-label="Moss overview">
+    <article class="card creature-card">
+      <div class="card-label"><span>RIGHT NOW</span><span id="clock">0:00</span></div>
+      <div class="creature-stage">
+        <div id="moss-creature" class="robot-sprite" role="img" aria-label="Moss, a gray armored bipedal robot creature with amber eyes"></div>
+        <div class="activity-line"><span class="activity-dot"></span><span id="activity">Observing</span></div>
+      </div>
+      <div class="small-status"><span id="mode-label">LEARNING FROM EXPERIENCE</span><span id="coordinates" hidden></span></div>
+      <ol id="activity-glance" class="activity-glance" aria-label="Latest observed actions"><li>Waiting for the next observed action.</li></ol>
+    </article>
+
+    <article class="card brain-card">
+      <p class="eyebrow">THE BRAIN</p>
+      <div class="brain-counts"><div><strong>15</strong><span>lobes</span></div><div><strong>29</strong><span>tracts</span></div><div><strong id="memory-count">0</strong><span>memories</span></div></div>
+      <p id="memory-summary" class="memory-summary">Loading experience memory…</p>
+      <div class="progress-strip" id="progress-strip" aria-label="Measured progress"></div>
+      <div class="decision-box"><span class="eyebrow">BRAIN OUTPUT THIS MOMENT</span><strong id="decision-now">Loading…</strong><small>The displayed action is decoded from the brain; Moss does not narrate private thoughts.</small></div>
+      <div class="review-note"><span class="review-mark">↻</span><div><strong>Daily capability review</strong><p>Three times a day: GPT-6.1 Sol proposes a change; GPT-6 Luna implements and tests it in an isolated copy. Moss does not write its own code.</p></div></div>
+      <p class="gap-note"><strong>Still to learn:</strong> choose its own learning goals and maintain an explicit model of what it can do.</p>
+    </article>
+  </section>
+
+  <details id="habitat-panel" class="habitat-panel card" open>
+    <summary>DIGITAL WORLD · MOSS INSTANCE <span id="environment-status">8 interactive places</span></summary>
+    <div class="habitat-content">
+      <div class="habitat" aria-label="Angled pixel-art habitat">
+        <div class="habitat-top"><span><i class="live-dot"></i> MOSS INSTANCE · COMPUTER SPACE</span><span class="view-tag">SIMULATED 2.5D WORLD</span></div>
+        <canvas id="world-canvas" width="960" height="540" tabindex="0" role="img" aria-label="Interactive habitat world view"></canvas>
+        <div class="view-controls" aria-label="World view controls"><button id="zoom-out" aria-label="Zoom out">−</button><span id="zoom-label">1×</span><button id="zoom-in" aria-label="Zoom in">+</button><button id="zoom-reset" aria-label="Show whole habitat">⌖</button></div>
+        <div class="scene-bottom"><span>World position <span id="world-position"></span></span><span id="world-clock"></span></div>
+      </div>
+      <div class="world-caption">Resource stations and paths are real simulation locations. Moss receives sensory cues; its brain chooses each response.</div>
+      <div id="places" class="places" aria-label="Interactive places"></div>
+      <div class="feature-info"><div><h2 id="feature-title">Choose a place</h2><p id="feature-detail"></p><div id="feature-actions" class="feature-actions"></div></div><ul id="feature-state"></ul></div>
+    </div>
+  </details>
+
+  <section class="observatory" aria-label="Learning evidence and recent activity">
+    <article class="card observatory-card">
+      <div class="section-heading"><div><p class="eyebrow">RECENT BEHAVIOR</p><h2>What Moss actually did</h2></div><span class="evidence-tag">Saved from the simulation</span></div>
+      <ol id="activity-log" class="activity-log"><li>Waiting for the first observed action.</li></ol>
+    </article>
+    <article class="card observatory-card">
+      <div class="section-heading"><div><p class="eyebrow">MEASURED LEARNING</p><h2>Is it improving?</h2></div><span class="evidence-tag">Evidence, not a claim</span></div>
+      <strong id="research-status">Loading latest candidate result…</strong>
+      <p id="research-result" class="research-result"></p>
+      <p class="hint">Memory counts show recorded experience. Improvement requires repeated held-out comparisons; this interface does not infer intelligence from activity alone.</p>
+    </article>
+  </section>
+
+  <section class="signals card">
+    <div class="section-heading"><div><p class="eyebrow">BODY SIGNALS · WORLD RESOURCES</p><h2>What Moss needs and where to find it</h2></div><p>The readings are genome signals. This panel also shows available matching resources.</p></div>
+    <div id="needs" class="needs"></div>
+    <div class="digital-self"><div><p class="eyebrow">DIGITAL SELF-MODEL · WORLD MAP</p><p>Moss is a simulated digital creature. Its body signals can guide it toward matching resources; the brain still chooses each action.</p></div><ul id="resource-map" aria-live="polite"></ul></div>
+  </section>
+
+  <section class="offer card">
+    <div class="section-heading"><div><p class="eyebrow">YOU CAN OFFER</p><h2>Let Moss choose</h2></div><p>Offers never force an action.</p></div>
+    <div class="care-buttons">
+      <button data-action="feed" data-food="meal"><span class="offer-icon">●</span>Food</button>
+      <button data-action="feed" data-food="fruit"><span class="offer-icon">◉</span>Fruit</button>
+      <button data-action="feed" data-food="seed"><span class="offer-icon">❧</span>Seeds</button>
+      <button data-action="play"><span class="offer-icon">◇</span>Toy</button>
+      <button data-action="rest"><span class="offer-icon">☾</span>Rest</button>
+    </div>
+    <p id="notice" role="status" aria-live="polite"></p>
+  </section>
+
+
+  <details class="capabilities card" open>
+    <summary>What Moss can do today — and what is still missing <span>Honest capability map</span></summary>
+    <div class="capability-content"><ul id="ability-status" class="ability-status"></ul><p>Available interactions are choices in the world. Unbuilt abilities such as life-stage growth, construction, crafting, and self-chosen learning goals are shown as missing rather than simulated as if they already worked.</p></div>
+  </details>
+
+  <details class="notebook card">
+    <summary>Memories and settings <span>+</span></summary>
+    <div class="notebook-inner">
+      <form id="rename"><label for="pet-name">Name</label><div><input id="pet-name" maxlength="32" required autocomplete="off"><button>Save name</button></div></form>
+      <div><label for="learning-mode">How it explores</label><select id="learning-mode"><option value="learned">Learn from experience</option><option value="scripted">Guided exploration</option></select><p class="hint">Guided exploration uses authored goals.</p></div>
+      <div><p class="eyebrow">RECENT CARE</p><ul id="events"></ul><p id="saved" class="hint"></p><button id="save" class="quiet">Save checkpoint</button></div>
+      <div><p class="eyebrow">RECENT EXPERIENCES</p><ul id="memories"></ul></div>
+      <p id="model-note" class="model-note">REA-derived genome brain with original body, sensing, and memory adapters.</p>
+    </div>
+  </details>
+  <footer><span>Local research pet · checkpointed on this computer</span><span>15-LOBE BRAIN · 29 TRACTS</span></footer>
+</main>
+</body>
+</html>

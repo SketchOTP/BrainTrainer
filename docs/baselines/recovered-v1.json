@@ -1,0 +1,24 @@
+{
+  "baseline_id": "docking-station-recovered-2026-11-06-v1",
+  "package_version": "0.3.0",
+  "checkpoint_schema": 1,
+  "source_artifact_policy": "owner-supplied local program; no redistribution permission implied",
+  "sha256": {
+    "src/creature_brain/neural.py": "ad8173ce59ab817a7142ba6e12285c7e3a4f89a5114cafd874f415eea230a3a3",
+    "src/creature_brain/svrule.py": "d80fb149be01f804097df9f9f49797eadb126da318fb2e7d4e43ecf3253dce35",
+    "src/creature_brain/genome.py": "16112c98c447b8a1415beb5cbe31c983b76615d8ec8f97936025722dfd70133d",
+    "src/creature_brain/sensory.py": "91c2adb07bb1813e0fcb876ae41991587bf2e63154218e64e4e3f9b0d830c27b",
+    "research/docking-station-20261103/resources/chichi-brain-program.json": "0c6a3dda3505bc23afa8966d7370d6d279f635164965d4754c72a76c6938c0e5",
+    "research/docking-station-20261103/brain-connections-20261106/FINDINGS.md": "ece3d817c5636233f8f97b1963902597921613d458b62c2645ebf022d32314d9",
+    "research/docking-station-20261103/brain-connections-20261106/queue-runtime/REPORT.md": "8ed92edc518638093736b955789b93e3e90fb967122f0dff433d869ffe1a8c21",
+    "research/docking-station-20261103/brain-connections-20261106/partial-tract-replay/REPORT.md": "b5196745c7ce24661f3d5bde24124e6995d91d18371218076987b1de2eab94c7",
+    "research/docking-station-20261103/brain-connections-20261106/native-brain-state/REPORT.md": "d03be4748cb823b4d9cacc135f057583c934c35e3d3cacbeb5c37fe37a05af29"
+  },
+  "native_engine_sha256": "007e9d72151d051e25fb405239705204fc87cf9566026fbc86fe560706793385",
+  "evidence": "research/docking-station-20261103/brain-connections-20261106/queue-runtime/REPORT.md",
+  "limitations": [
+    "partial native parity only",
+    "native save may change weak queue while portable checkpoint preserves it",
+    "learning-disabled mode not yet isolated"
+  ]
+}

@@ -1,0 +1,13 @@
+# CB-20261107-04 prepared development qualification
+
+Freeze before inspecting any development outcomes. Prepare each of seeds 0–3 once using the optional one-pass inherited preparation. Save the prepared state and receipt before cloning it into the four motor conditions and both mirrored layouts; verify complete starting neural state, RNG, physical body, chemistry, time, pending inputs and preparation receipt match across arms before offering food. The profile processes the 29 expressed age-stage-1 instinct records through the existing boot sequence; it is inherited preparation, not food experience, not native sleep parity, and the default brain remains unchanged.
+
+## Immediate qualification
+
+Use four controllers (normal, effort, existing adaptive and confirmation) × four seeds × two mirrors, for 32 cases. Offer one food at distance 2.0, with external hunger 0.8, energy 0.5, and a 64-tick limit. Use the existing unmodified brain, movement adapter and action lifecycle; no action is supplied by the host. Each scheduled case counts regardless of request, timeout, interruption or failure. Qualify only if at least 8/32 cases complete naturally, at least two distinct seeds complete, and successful cases include both mirrored layouts.
+
+## Delayed qualification
+
+From disposable prepared copies of the same four seeds, using normal-only effort, hide food and run the existing CB-01 640-tick active non-food interval. No food training, phase resets, model reset, or further rehearsal is permitted. Then probe a disposable clone in each mirrored scene: set only external hunger to 0.8 and energy to 0.5, present one food 2.0 units away, and allow up to 64 ticks. Preserve the evolved brain, neural RNG, queued signals, action state, world clock and model; do not count any forced action or contact as a natural success. All eight scheduled seed/layout probes count. Qualify only if at least 2/8 complete, successful probes include at least two distinct seeds, and both mirror layouts are represented. Record 640-tick event digests, action and movement counts, prepared state and each full opportunity trace.
+
+The two gates are independent: perform both regardless of the other gate's result. If either fails, stop before a fresh comparison; preserve all raw cases and report failure points. No changes to rehearsal or parameter sweeps are authorized by these feasibility gates. If both pass, freeze the separate amended CB-02 protocol with its original paired completion, cost and uncertainty gates before touching fresh seeds. These feasibility thresholds do not establish learned superiority or biological standards.

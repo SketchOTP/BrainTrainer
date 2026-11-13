@@ -1,0 +1,7 @@
+# Motor attribution follow-up results
+
+All six predeclared pairs completed for already studied seeds 220 and 227 and all three conditions. Independent reruns of the archived original reproduced the corresponding frozen-study choices, outcomes, motor records and final reserves. The corrected runner produced identical choices, execution outcomes, forecasts, positions and costs apart from its added action-identity fields. The six pairs covered 2,259 movements, including 72 where the original lifecycle action ID differed from the current choice ID.
+
+For all corrected movements, the recorded executing action ID, action and target matched the lifecycle outcome, and every motor attempt ID was unique. The five focused motor-host tests passed, including a continued-eat regression and a separate real-process restart; the combined focused model, host, server, baseline, food and replay selection passed 33 tests. These six paired reruns show no numerical effect of the fix on those particular replays; they are not a fresh-seed confirmation or proof of equivalence in every possible state. The original 36 held-out cases were not relabeled or replaced.
+
+The [predeclared follow-up](SELF_MODEL_ATTRIBUTION_FOLLOWUP.md), [source manifest](../runs/self-model/attribution-followup-manifest.json), and [raw paired cases](../runs/self-model/attribution-followup-cases.jsonl) are preserved. The raw cases SHA-256 is `3242bf04cdad0d0a6ebd6a3101e326263cebf2f40888a8e31acf7b81214145ad`. Frozen source digests matched after the follow-up.

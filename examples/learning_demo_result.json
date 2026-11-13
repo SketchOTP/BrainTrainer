@@ -1,0 +1,87 @@
+{
+  "model": "need-relief-reference-v1",
+  "parity": "original experimental adaptation; not original-engine parity",
+  "first_choice": "bitter-berry",
+  "observed_first_relief": [
+    -0.19999999999999996,
+    0.0
+  ],
+  "choice_after_bad_outcome": "apple",
+  "observed_second_relief": [
+    0.5,
+    0.0
+  ],
+  "choice_when_cold": "blanket",
+  "consolidated_food_association": {
+    "short_relief": {
+      "hunger": 0.4062393783962517,
+      "cold": 0.0
+    },
+    "long_relief": {
+      "hunger": 0.37901127052126016,
+      "cold": 0.0
+    },
+    "short_feedback": 0.0,
+    "long_feedback": 0.0,
+    "samples": 1
+  },
+  "initial_decision_trace": {
+    "decision_id": 1,
+    "tick": 1,
+    "chosen": {
+      "object_id": "bitter-berry",
+      "category": "unknown-food",
+      "action": "eat",
+      "accessibility": 1.0,
+      "drive_contributions": [
+        0.44000000000000006,
+        0.0
+      ],
+      "feedback_contribution": 0.0,
+      "score": 0.44000000000000006
+    },
+    "before_drives": [
+      0.8,
+      0.1
+    ],
+    "explored": false,
+    "candidates": [
+      {
+        "object_id": "apple",
+        "category": "food",
+        "action": "eat",
+        "accessibility": 1.0,
+        "drive_contributions": [
+          0.27999999999999997,
+          0.0
+        ],
+        "feedback_contribution": 0.0,
+        "score": 0.27999999999999997
+      },
+      {
+        "object_id": "bitter-berry",
+        "category": "unknown-food",
+        "action": "eat",
+        "accessibility": 1.0,
+        "drive_contributions": [
+          0.44000000000000006,
+          0.0
+        ],
+        "feedback_contribution": 0.0,
+        "score": 0.44000000000000006
+      },
+      {
+        "object_id": "blanket",
+        "category": "shelter",
+        "action": "warm",
+        "accessibility": 1.0,
+        "drive_contributions": [
+          0.0,
+          0.06
+        ],
+        "feedback_contribution": 0.0,
+        "score": 0.06
+      }
+    ]
+  }
+}

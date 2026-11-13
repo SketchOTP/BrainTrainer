@@ -1,0 +1,17 @@
+{
+  "source": "generated from owner supplied sheet-1.png using imagegen",
+  "generated_file": "owner-supplied/generated project asset; original local path omitted",
+  "sha256": "8677afff0624c61d0381c08573a3292367bc136b38483defe69d8cb9538f6359",
+  "layout": {
+    "columns": 4,
+    "rows": [
+      "south",
+      "west",
+      "east",
+      "north"
+    ],
+    "frames_per_direction": 4
+  },
+  "design": "Purple armored baby dragon, amber eyes, gold joints, crest and purple back gem; alternating footfall cycle based on owner references.",
+  "processing": "Generated atlas copied unchanged; runtime sampling only. Original four sheets retained unchanged."
+}

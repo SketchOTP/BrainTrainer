@@ -1,0 +1,54 @@
+{
+  "source_reference": "owner-supplied/generated project asset; original local path omitted",
+  "tool": "built-in image_gen",
+  "assets": {
+    "movement": {
+      "sha256": "5c55adbdcfb39fb1d8b7f4a7349e65662d3d6956857697cb2f3988356a892064",
+      "size": [
+        1254,
+        1254
+      ],
+      "rows": [
+        "walk-down",
+        "walk-left",
+        "walk-right",
+        "walk-up"
+      ],
+      "columns": 4,
+      "transparent": true,
+      "processing": "unchanged generated PNG; runtime cell sampling only"
+    },
+    "daily": {
+      "sha256": "f972a3f0a7ce1029509538fb1ae3ecfe31a01916df38f07d0d413ef885a2185f",
+      "size": [
+        1254,
+        1254
+      ],
+      "rows": [
+        "idle-blink",
+        "rest",
+        "eat",
+        "interact"
+      ],
+      "columns": 4,
+      "transparent": true,
+      "processing": "unchanged generated PNG; runtime cell sampling only"
+    },
+    "expressions": {
+      "sha256": "e4400942e5e59afc9b8dcf08cb5efe5e72add8920169a24686fb673d7cee6f9e",
+      "size": [
+        1254,
+        1254
+      ],
+      "rows": [
+        "rehearse",
+        "request",
+        "pleased",
+        "curious"
+      ],
+      "columns": 4,
+      "transparent": true,
+      "processing": "unchanged generated PNG; runtime cell sampling only"
+    }
+  }
+}

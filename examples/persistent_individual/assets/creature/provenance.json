@@ -1,0 +1,41 @@
+{
+  "origin": "User supplied exact character sheets; copied without image modification",
+  "sheets": [
+    {
+      "source": "owner-supplied/generated project asset; original local path omitted",
+      "asset": "sheet-1.png",
+      "sha256": "6ad1889c641747dcd5ca34c9844f4c5c77bd9779346281cfe89faba7e2e6927b",
+      "width": 1254,
+      "height": 1254,
+      "columns": 8,
+      "rows": 8
+    },
+    {
+      "source": "owner-supplied/generated project asset; original local path omitted",
+      "asset": "sheet-2.png",
+      "sha256": "09e13afebb6ec7e5f06d17f35c1a1d8a1da4249a56a353dbc68efb47f5ba3d7c",
+      "width": 1254,
+      "height": 1254,
+      "columns": 8,
+      "rows": 8
+    },
+    {
+      "source": "owner-supplied/generated project asset; original local path omitted",
+      "asset": "sheet-3.png",
+      "sha256": "d4a51dc40aea3cdd5a4a6dea7fe17dbb83c6eb828ae8e34e8b17ce009b5eb88e",
+      "width": 1254,
+      "height": 1254,
+      "columns": 8,
+      "rows": 8
+    },
+    {
+      "source": "owner-supplied/generated project asset; original local path omitted",
+      "asset": "sheet-4.png",
+      "sha256": "67045eb1ac5d6a863a447b628dde086f4d09d7097e3e37e511a70cedca519735",
+      "width": 1254,
+      "height": 1254,
+      "columns": 8,
+      "rows": 8
+    }
+  ]
+}

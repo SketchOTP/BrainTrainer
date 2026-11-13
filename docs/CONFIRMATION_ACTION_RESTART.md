@@ -1,0 +1,23 @@
+# Confirmation and action restart evidence
+
+A bounded seed-2 run used the unchanged recovered brain and confirmation motor individual. At tick 342, a naturally brain-selected eat action, ID `340`, was approaching `object-0` while the model had pending normal-effort confirmations for action 12 and another action. A child process saved that exact state and exited. After a fresh process restored it, the brain continued the same target and action without an external action suggestion; motor attempt `340:motor:342` actually consumed the same-action confirmation, moved 0.35 units, and cost 0.01 motor units.
+
+After that natural confirming movement, the environment deliberately moved the food into contact. The brain continued and consumed `object-0` once, producing one pending outcome for action `340`. A second child process saved that state and exited before feedback delivery. A third restored it and advanced four ticks. Instrumentation scoped to pending-outcome delivery observed exactly one brain queue call associated with action `340`; no second consumption of that action occurred. Another legitimate action's separate feedback was also delivered, so the test does not incorrectly equate all queue calls with one outcome. Both restarted continuations matched uninterrupted counterparts in full normalized saved state and recorded events. Each child exited with observed status 0. At the second checkpoint the eat action was complete; the pending confirmation and action coexist at the first checkpoint. This is one controlled case, and moving food into contact is an environmental intervention; it does not itself establish unaided navigation or a general success rate.
+
+The [probe](../examples/persistent_individual/confirmation_restart_probe.py) can independently recreate the case. The [receipt](../runs/confirmation-action-restart/receipt-seed2-final.json) includes SHA-256 digests of each retained evidence file and of relevant source and program files. The [evidence directory](../runs/confirmation-action-restart/evidence-seed2-final/) preserves the first and second portable checkpoints, final checkpoint, restarted events, uninterrupted comparison states and events. The executable regression is `tests/test_confirmation_action_restart.py`.
+
+# Operational continuity
+
+The direct interactive server reports both current `time` and `last_durable_tick` via `/state` and the live view. After an atomic checkpoint replacement, it syncs the checkpoint directory before advertising the tick as durable. It appends session, checkpoint, shutdown-request and server-error receipts to `<checkpoint>.lifecycle.jsonl`. A server-side shutdown entry marks its own exit status **unobserved**; a process cannot establish its own later operating-system wait status. A missing shutdown entry is unknown and is not a diagnosis of a crash or proof of data loss.
+
+For observed child exit status, launch the same server through the optional parent process:
+
+```sh
+.venv/bin/python examples/persistent_individual/launch_individual.py -- --experimental-confirm-recovery
+```
+
+Omit the option for the baseline, or pass any normal server options after `--`. The launcher appends child PID, forwarded signals and the **actual observed** child return code to `runs/persistent-individual/process-observations.jsonl`; an explicit `--process-log PATH` sets another file. A negative child return code denotes termination by that signal. If the launcher itself is killed, its missing observation remains unknown; this mechanism is not a global process audit. Logs and the last checkpoint tick do not establish that unsaved experience survived an interruption. The lifecycle and launcher logs are local append-only JSONL, with file and directory sync on each receipt.
+
+Two isolated operational regressions verify graceful shutdown/observed status 0, visible live-versus-durable tick differences, and `SIGKILL` observed as child return code −9 without fabricating a server shutdown record. The 15-test related server, model and baseline selection passed. During this work the prior live baseline was gracefully stopped through its owning process session, which observed exit status 0, and its same identity was restored from the resulting tick-25142 checkpoint under the launcher. The next server reports its own current and durable ticks independently; later unsaved ticks are not claimed as persisted.
+
+A subsequent combined focused run passed 54 tests covering the calibration, restart, operational server, candidate and baseline model, food and replay paths. An independent local read also verified all eight source digests and eight retained-evidence digests in the final receipt.
